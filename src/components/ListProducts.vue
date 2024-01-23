@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import { api } from "./../services.js";
 
 export default {
     name: "ListProducts",
@@ -24,7 +24,7 @@ export default {
     },
     methods: {
       getProducts() {
-        axios.get('https://raw.githubusercontent.com/rezendefelipe/vue-ranek/main/ranek-api/ranek.json')
+        api.get('/ranek.json')
           .then(data => this.products = data.data.produto)
       }
     }
