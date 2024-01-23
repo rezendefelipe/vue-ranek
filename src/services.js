@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-    baseURL: "https://raw.githubusercontent.com/rezendefelipe/vue-ranek/main/ranek-api"
+    baseURL: "http://localhost:3000"
 })
 
 export const api = {

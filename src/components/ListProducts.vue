@@ -11,21 +11,34 @@
 
 <script>
 import { api } from "./../services.js";
+import { serialize } from "./../helpers.js"
 
 export default {
     name: "ListProducts",
     data() {
       return {
-        products: null
+        products: null,
+        pagination: 9
       }
     },
     created() {
       this.getProducts()
     },
+    computed: {
+      url() {
+        const queryString = serialize(this.$route.query);
+        return `/produto?_limit=${ this.pagination }${ queryString }`
+      }
+    },
     methods: {
       getProducts() {
-        api.get('/ranek.json')
-          .then(data => this.products = data.data.produto)
+        api.get(this.url)
+          .then(data => this.products = data.data)
+      }
+    },
+    watch: {
+      url() {
+        this.getProducts();
       }
     }
 }
