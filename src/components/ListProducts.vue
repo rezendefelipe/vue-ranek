@@ -1,20 +1,29 @@
 <template>
   <section class="products-container">
-    <div v-if="products.length > 0" class="products">
-      <div v-for="product in products" :key="product.id" class="product">
-        <router-link to="/">
-          <img v-if="product.fotos" :src="product.fotos[0].src" :alt="product.fotos[0].titulo">
-          <p class="price">{{ product.preco }}</p>
-          <h2 class="title">{{ product.nome }}</h2>
-          <p>{{ product.descricao }}</p>
-        </router-link>
+    <transition mode="out-in">
+      <div v-if="products.length > 0" class="products" kay="productsList">
+        <div v-for="(product, index) in products" :key="index" class="product">
+          <router-link to="/">
+            <img v-if="product.fotos" :src="product.fotos[0].src" :alt="product.fotos[0].titulo">
+            <p class="price">{{ product.preco }}</p>
+            <h2 class="title">{{ product.nome }}</h2>
+            <p>{{ product.descricao }}</p>
+          </router-link>
+        </div>
+        <PaginationProducts
+          :total-products="totalProducts"
+          :per-page="pagination"
+        ></PaginationProducts>
       </div>
-    </div>
-    <div v-else-if="products.length === 0" class="no-result">
-      <p>
-        Busca sem resultados
-      </p>
-    </div>
+      <div v-else-if="products.length === 0" class="no-result" key="noResult">
+        <p>
+          Busca sem resultados
+        </p>
+      </div>
+      <div v-else key="loading">
+        <LoadingPage></LoadingPage>
+      </div>
+    </transition>
   </section>
 </template>
 
@@ -22,34 +31,43 @@
 import { api } from "./../services.js";
 import { serialize } from "./../helpers.js"
 
+import PaginationProducts from "@/components/PaginationProducts"
+
 export default {
-    name: "ListProducts",
-    data() {
-      return {
-        products: [],
-        pagination: 9
-      }
-    },
-    created() {
-      this.getProducts()
-    },
-    computed: {
-      url() {
-        const queryString = serialize(this.$route.query);
-        return `/produto?_limit=${ this.pagination }${ queryString }`
-      }
-    },
-    methods: {
-      getProducts() {
-        api.get(this.url)
-          .then(data => this.products = data.data)
-      }
-    },
-    watch: {
-      url() {
-        this.getProducts();
-      }
+  name: "ListProducts",
+  components: { PaginationProducts },
+  data() {
+    return {
+      products: [],
+      totalProducts: 0,
+      pagination: 3
     }
+  },
+  created() {
+    this.getProducts()
+  },
+  computed: {
+    url() {
+      const queryString = serialize(this.$route.query);
+      return `/produto?_limit=${ this.pagination }${ queryString }`
+    }
+  },
+  methods: {
+    getProducts() {
+      this.products = [];
+      api.get(this.url)
+        .then(data => {
+          //MOCK 12
+          this.totalProducts = Number(data.data['x-total-count']) || 12
+          this.products = data.data
+        })
+    }
+  },
+  watch: {
+    url() {
+      this.getProducts();
+    }
+  }
 }
 </script>
 
