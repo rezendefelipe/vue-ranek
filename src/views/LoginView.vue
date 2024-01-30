@@ -35,7 +35,8 @@ export default {
     },
     methods: {
       handleLogin() {
-        console.log('handleLogin');
+        this.$store.dispatch("getUser", this.login.email);
+        this.$router.push({ name: "user" })
       }
     }
 }
