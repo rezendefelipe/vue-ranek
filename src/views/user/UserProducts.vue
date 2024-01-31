@@ -5,15 +5,15 @@
     </h2>
     <AddProducts></AddProducts>
     <h2>Seus Produtos</h2>
-    <!-- <transition-group v-if="userProducts" name="list" tag="ul"> -->
+    <div v-if="userProducts">
       <ul>
-        <li v-for="product in userProducts" :key="product.email">
-          <ProductItens :product="product">
+        <li v-for="product in userProducts" :key="product.email" class="item-li">
+          <ProductItens :product="product" class="item">
             <p>{{ product.descricao }}</p>
           </ProductItens>
         </li>
       </ul>
-    <!-- </transition-group> -->
+    </div>
   </section>
 </template>
 
@@ -51,5 +51,16 @@ export default {
 <style scoped>
   h2 {
     margin-bottom: 20px;
+  }
+
+  .list-enter,
+  .list-leave-to {
+    opacity: 0;
+    transform: translate3d(20px, 0, 0);
+  }
+
+  .list-enter-active,
+  .list-leave-active {
+    transition: all .3s;
   }
 </style>
