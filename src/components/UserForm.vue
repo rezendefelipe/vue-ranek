@@ -7,7 +7,7 @@
     <label for="password">Senha</label>
     <input type="password" id="password" name="password" v-model="password">
     <label for="cep">CEP</label>
-    <input type="cep" id="cep" name="cep" v-model="cep">
+    <input type="cep" id="cep" name="cep" v-model="cep" @keyup="getAddressByCep">
     <label for="street">Rua</label>
     <input type="street" id="street" name="street" v-model="street">
     <label for="number">Número</label>
@@ -25,8 +25,24 @@
 </template>
 
 <script>
+import { getCep } from "@/services.js"
+
 export default {
     name: "UserForm",
+    methods: {
+        getAddressByCep() {
+            const cep = this.cep.replace(/\D/g, "");
+            if (cep.length === 8) {
+                getCep(cep).then(resp => {
+                    this.street = resp.data.logradouro;
+                    this.bairro = resp.data.bairro;
+                    this.city = resp.data.localidade;
+                    this.state = resp.data.uf;
+                })
+            }
+
+        }
+    },
     computed: {
         name: {
             get() {
