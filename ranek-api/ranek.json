@@ -1,4 +1,50 @@
 {
+  "transacao": [
+    {
+      "id": "c63c",
+      "comprador_id": "felipe@teste",
+      "vendedor_id": "felipe@teste",
+      "produto": {
+        "id": "notebook",
+        "nome": "Notebook",
+        "usuario_id": "felipe@teste",
+        "preco": "4999",
+        "vendido": "false",
+        "descricao": "Esse é um novo notebook.",
+        "fotos": null
+      },
+      "endereco": {
+        "cep": "12345678",
+        "rua": "Rua Ali Perto",
+        "numero": "25",
+        "bairro": "",
+        "cidade": "Sao Paulo",
+        "estado": "SP"
+      }
+    },
+    {
+      "id": "f83d",
+      "comprador_id": "u@u.com",
+      "vendedor_id": "felipe@teste",
+      "produto": {
+        "id": "smartphone",
+        "nome": "Smartphone",
+        "usuario_id": "felipe@teste",
+        "preco": "1999",
+        "vendido": "false",
+        "descricao": "Esse é um novo smartphone.",
+        "fotos": null
+      },
+      "endereco": {
+        "cep": "01308020",
+        "rua": "Rua Herculano de Freitas",
+        "numero": "123",
+        "bairro": "Bela Vista",
+        "cidade": "São Paulo",
+        "estado": "SP"
+      }
+    }
+  ],
   "usuario": [
     {
       "id": "felipe@teste",
@@ -8,8 +54,21 @@
       "rua": "Rua Ali Perto",
       "cep": "12345678",
       "numero": "25",
+      "bairro": "Bela Vista",
       "estado": "SP",
       "cidade": "Sao Paulo"
+    },
+    {
+      "id": "u@u.com",
+      "nome": "uuuu uuuu",
+      "email": "u@u.com",
+      "senha": "123123",
+      "cep": "01308020",
+      "rua": "Rua Herculano de Freitas",
+      "numero": "123",
+      "bairro": "Bela Vista",
+      "cidade": "São Paulo",
+      "estado": "SP"
     }
   ],
   "produto": [

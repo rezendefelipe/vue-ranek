@@ -1,11 +1,13 @@
 <template>
   <form>
-    <label for="name">Nome</label>
-    <input type="text" id="name" name="name" v-model="name">
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email" v-model="email">
-    <label for="password">Senha</label>
-    <input type="password" id="password" name="password" v-model="password">
+    <div class="user-data" v-if="showDataLogin">
+        <label for="name">Nome</label>
+        <input type="text" id="name" name="name" v-model="name">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" v-model="email">
+        <label for="password">Senha</label>
+        <input type="password" id="password" name="password" v-model="password">
+    </div>
     <label for="cep">CEP</label>
     <input type="cep" id="cep" name="cep" v-model="cep" @keyup="getAddressByCep">
     <label for="street">Rua</label>
@@ -115,16 +117,23 @@ export default {
             set(value) {
                 this.$store.commit("UPDATE_USER", { estado: value });
             }
+        },
+        showDataLogin() {
+            return (!this.$store.state.login || (this.$route.name === 'user-edit'))
         }
     }
 }
 </script>
 
 <style scoped>
-    form {
+    form, .user-data {
         display: grid;
         grid-template-columns: 80px 1fr;
         align-items: center;
+    }
+
+    .user-data {
+        grid-column: 1 / 3;
     }
 
     .button {
